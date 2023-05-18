@@ -1,13 +1,13 @@
 const { Component } = require('react');
 
 class Searchbar extends Component {
-  static defaultProps = { searchImage: 0 };
+  static defaultProps = { searchWord: 0 };
   render() {
-    const { searchImage } = this.props;
+    const { searchWord } = this.props;
 
     return (
       <header className="searchbar">
-        <form className="form" onSubmit={searchImage}>
+        <form className="form" onSubmit={searchWord}>
           
           <button type="submit" className="button" >
             <span className="button-label">Search</span>
