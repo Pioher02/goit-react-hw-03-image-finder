@@ -8,10 +8,7 @@ class Searchbar extends Component {
     return (
       <header className="searchbar">
         <form className="form" onSubmit={searchWord}>
-          
-          <button type="submit" className="button" >
-            <span className="button-label">Search</span>
-          </button>
+          <button type="submit" className="button" />
           <input
             className="input"
             name="search"
