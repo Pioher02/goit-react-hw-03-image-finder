@@ -38,23 +38,32 @@ class App extends Component {
 
   searchImages = async (search, page) => {
     this.setState({ loading: true });
-    const request = await fetchImages(search, page);
-    const newImages = request.map(function (image) {
-      var nImg = {};
-      nImg.name = search;
-      nImg.id = image.id;
-      nImg.largeImageURL = image.largeImageURL;
-      nImg.webformatURL = image.webformatURL;
-      return nImg;
-    });
-    if (newImages.length > 0) {
-      this.setState(({ images }) => ({
-        images: [...images, ...newImages],
-        loading: false,
-      }));
-    } else {
-      this.setState({ loading: false });
-      Notiflix.Notify.failure('Image not found, search again');
+    try {
+      const request = await fetchImages(search, page);
+      const newImages = request.map(function (image) {
+        var nImg = {};
+        nImg.name = search;
+        nImg.id = image.id;
+        nImg.largeImageURL = image.largeImageURL;
+        nImg.webformatURL = image.webformatURL;
+        return nImg;
+      });
+      if (newImages.length > 0) {
+        this.setState(({ images }) => ({
+          images: [...images, ...newImages],
+          loading: false,
+        }));
+      } else {
+        if (page === 1) {
+          this.setState({ loading: false });
+          Notiflix.Notify.failure('Image not found, search again');
+        } else {
+          this.setState({ loading: false });
+          Notiflix.Notify.warning('No more image found');
+        }
+      }
+    } catch (error) {
+      Notiflix.Notify.failure(error);
     }
   };
 
